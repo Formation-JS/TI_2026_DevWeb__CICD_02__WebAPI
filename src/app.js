@@ -1,5 +1,5 @@
 import express from 'express';
-import calcService from './services/calc.service';
+import calcService from './services/calc.service.js';
 
 // Env
 const { PORT } = process.env;
@@ -26,7 +26,7 @@ app.get('/api/addition', (req, res) => {
   const nb2 = parseFloat(req.query.nb2);
 
   if(isNaN(nb1) || isNaN(nb2)) {
-    res.statusCode(422).json({
+    res.status(422).json({
       message: 'Boulet ! Donne des parametres nb1 et nb2 valides 😡'
     });
     return;
