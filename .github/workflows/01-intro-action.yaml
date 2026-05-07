@@ -7,5 +7,9 @@ jobs:
   restore_project:
     runs-on: ubuntu-latest
     steps:
-      - name: View actual file
+      - name: View initial files
+        run: ls -a -l
+      - name: Get code of repo → Checkout !
+        uses: actions/checkout@v6
+      - name: View files after checkout
         run: ls -a -l
