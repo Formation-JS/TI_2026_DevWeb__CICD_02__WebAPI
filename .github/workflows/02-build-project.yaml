@@ -1,0 +1,56 @@
+name: 02 - Build Project
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test_project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: View initial files
+        run: ls -a -l
+      - name: Get code of repo → Checkout !
+        uses: actions/checkout@v6
+      - name: View files after checkout
+        run: ls -a -l
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+      - name: Install dependence
+        run: npm ci
+      - name: Lancement les tests
+        run: npm run test:run
+  build_project:
+    needs: test_project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+      - name: Install dependence
+        run: npm ci
+      - name: Build App
+        run: npm run build
+      - name: Uploader l'Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: webapi-buildage
+          path: |
+            dist/app.cjs
+            package.json
+            package-lock.json
+  deploy_project:
+    needs: build_project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Downloader l'Artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: webapi-buildage
+          path: webapi
+      - name: View files
+        run: ls -l -a webapi
