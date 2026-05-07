@@ -1,0 +1,11 @@
+name: 01 - Intro au Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  restore_project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: View actual file
+        run: ls -a -l
