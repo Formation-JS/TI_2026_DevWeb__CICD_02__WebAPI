@@ -1,4 +1,4 @@
-name: 02 - Build Project
+name: 03 - Deploy Project
 
 on:
   workflow_dispatch:
