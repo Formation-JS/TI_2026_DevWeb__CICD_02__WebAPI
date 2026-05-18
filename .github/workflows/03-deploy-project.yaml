@@ -54,4 +54,13 @@ jobs:
           path: webapi
       - name: View files
         run: ls -l -a webapi
-
+      - name: Deploy by SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          server: ${{ vars.SERVER_SFTP }}
+          port: '22'
+          username: ${{ vars.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          local_path: './webapi/*'
+          remote_path: ${{ vars.SERVER_PATH }}
+        
