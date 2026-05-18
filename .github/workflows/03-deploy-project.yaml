@@ -46,6 +46,7 @@ jobs:
   deploy_project:
     needs: build_project
     runs-on: ubuntu-latest
+    environment: alwaysdata-sftp
     steps:
       - name: Downloader l'Artifact
         uses: actions/download-artifact@v8
@@ -57,7 +58,7 @@ jobs:
       - name: Deploy by SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
-          server: ${{ vars.SERVER_SFTP }}
+          server: ${{ vars.SERVER }}
           port: '22'
           username: ${{ vars.USERNAME }}
           password: ${{ secrets.PASSWORD }}
