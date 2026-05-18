@@ -64,4 +64,20 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           local_path: './webapi/*'
           remote_path: ${{ vars.SERVER_PATH }}
-        
+
+  # Job non necessaire dans notre cas, car on a build avec « esbuild »
+  # Installation des packages node dans alwaysdata via un cmd ssh
+  install_packages:
+    needs: deploy_project
+    runs-on: ubuntu-latest
+    environment: alwaysdata-sftp
+    steps:
+      - name: Install node_modules
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ vars.SERVER }}
+          username: ${{ vars.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd ${{ vars.SERVER_PATH }}
+            npm ci --omit=dev
